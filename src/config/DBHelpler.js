@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import config  from './index';
+import config from './index';
 
 // 創建連接
 mongoose.connect(config.DB_URL, {

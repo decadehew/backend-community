@@ -5,6 +5,6 @@ import loginRouter from './loginRouter';
 const router = combineRouters(
   publicRouter,
   loginRouter
-)
- 
+);
+
 export default router;

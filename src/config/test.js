@@ -1,3 +1,3 @@
 import { setValue } from './RedisConfig';
 
-setValue('yonghew', 'testing')
+setValue('yonghew', 'testing');
