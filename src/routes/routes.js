@@ -1,10 +1,10 @@
-const combineRouters = require('koa-combine-routers');
-const dogRouter = require('./dogRouter');
-const catRouter = require('./catRouter');
+import combineRouters from 'koa-combine-routers';
+import publicRouter from './publicRouter';
+import loginRouter from './loginRouter';
 
 const router = combineRouters(
-  dogRouter,
-  catRouter
+  publicRouter,
+  loginRouter
 )
  
-module.exports = router;
+export default router;

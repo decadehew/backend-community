@@ -1,26 +1,27 @@
 const path = require('path');
+const utils = require('./utils');
 const nodeExternals = require('webpack-node-externals'); // 排除 node 模塊
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-debugger
 
 const webpackConfig = {
   target: 'node',
-  mode: 'development',
   entry: {
-    server: path.join(__dirname, 'src/index.js')
+    server: path.join(utils.APP_PATH, 'index.js')
+  },
+  resolve: {
+    ...utils.getWebpackResolveConfig()
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, './dist')
+    path: utils.DIST_PATH
   },
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         use: {
-          loader: ['babel-loader']
+          loader: 'babel-loader'
         },
         exclude: [path.join(__dirname, '/node_modules')]
       }
@@ -28,7 +29,14 @@ const webpackConfig = {
   },
   externals: [nodeExternals()],
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: (process.env.NODE_ENV === 'production' || 
+        process.env.NODE_ENV === 'prod') ? "'production" :
+        "'development'"
+      }
+    })
   ],
   node: {
     console: true,
@@ -42,7 +50,5 @@ const webpackConfig = {
   }
 }
 
-
-console.log(webpackConfig);
 
 module.exports = webpackConfig;
